@@ -6,9 +6,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const expressValidator = require('express-validator');
 const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 // config files
@@ -40,6 +40,10 @@ app.use(session({
 }));
 
 app.use(expressValidator());
+
+require('./config/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
