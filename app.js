@@ -6,12 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const expressValidator = require('express-validator');
+const session = require('express-session');
 
 const app = express();
 // config files
 const db = require('./config/db');
-
-const routes = require('./routes/index');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -22,13 +23,23 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride());
 
+// routes
+const routes = require('./routes/index');
 app.use(routes);
 
 // connect to our mongoDB database
 mongoose.connect(db.url, {useMongoClient: true});
 const connection = mongoose.connection;
-connection.on('error', (err) => console.log(err,'connection refused'));
+connection.on('error', (err) => console.log(err, 'connection refused'));
 connection.once('open', () => console.log('connection success'));
+
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(expressValidator());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
