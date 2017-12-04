@@ -8,7 +8,6 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
 const session = require('express-session');
-const passport = require('passport');
 
 const app = express();
 // config files
@@ -23,10 +22,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride());
 
-// routes
-const routes = require('./routes/index');
-app.use(routes);
-
 // connect to our mongoDB database
 mongoose.connect(db.url, {useMongoClient: true});
 const connection = mongoose.connection;
@@ -35,15 +30,15 @@ connection.once('open', () => console.log('connection success'));
 
 app.use(session({
     secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
 
-app.use(expressValidator());
+// routes
+const routes = require('./routes/index');
+app.use(routes);
 
-require('./config/passport')(passport);
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(expressValidator());
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

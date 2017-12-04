@@ -1,4 +1,5 @@
 // config/db.js
 module.exports = {
-    url: 'mongodb://localhost/eventsdb'
+    url: 'mongodb://localhost/eventsdb',
+    secret: 'levi9'
 };

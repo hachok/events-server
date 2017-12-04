@@ -34,8 +34,8 @@ router.post('/', [
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
 
-    bcrypt.getSalt(10, function (err, salt) {
-        bcrypt.hash(user.password, salt, function (err, hash) {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
             if(err) {
                 console.log(err);
             }
