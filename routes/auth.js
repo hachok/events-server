@@ -20,9 +20,9 @@ router.post('/login', [
     }, (err, user) => {
         if (err) throw err;
         if (!user) {
-            res.status(401).json({ message: 'Authentication failed. User not found.' });
+            res.status(401).json({ status: 401, message: 'Authentication failed. Bad credentials.' });
         } else if (user) {
-            bcrypt.compare(req.body.password, user.password, function (err, isMatch) {
+            bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
                 if (err) throw err;
                 if (isMatch) {
                     const token = jwt.sign({ id: user._id }, config.secret, {
@@ -30,7 +30,7 @@ router.post('/login', [
                     });
                     res.status(200).send({ user: user, _token: token });
                 } else {
-                    res.status(401).json({ message: 'Authentication failed. Wrong password.' });
+                    res.status(401).json({ status: 401, message: 'Authentication failed. Bad credentials.' });
                 }
             });
         }

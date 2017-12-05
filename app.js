@@ -36,7 +36,7 @@ app.use(session({
 
 // routes
 const routes = require('./routes/index');
-app.use(routes);
+app.use('/api/v1', routes);
 
 app.use(expressValidator());
 

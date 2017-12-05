@@ -52,4 +52,18 @@ router.post('/', [
     });
 });
 
+
+router.get('/current-user', (req, res) => {
+    User.find({_id: req.decoded.id}, (err, user) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send({
+                title: 'user',
+                user: user
+            });
+        }
+    });
+});
+
 module.exports = router;
