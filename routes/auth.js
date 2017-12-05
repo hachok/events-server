@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/db');
 
-router.post('/login', [
+router.post('/', [
     check('email', 'Email is not correct').isEmail(),
     check('password', 'Password is required').exists()
 ], (req, res) => {
@@ -35,10 +35,6 @@ router.post('/login', [
             });
         }
     });
-});
-
-router.get('/logout', (req, res) => {
-
 });
 
 module.exports = router;
