@@ -15,4 +15,17 @@ router.get('/', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+    Event.find({}, (err, events) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send({
+                title: 'events',
+                events: events
+            });
+        }
+    });
+});
+
 module.exports = router;

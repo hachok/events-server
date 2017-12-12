@@ -18,6 +18,9 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    tags: [{
+        type: String
+    }],
     role: {
         type: String,
         required: true,

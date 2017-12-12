@@ -20,11 +20,9 @@ const eventSchema = mongoose.Schema({
     end_date: {
         type: Date
     },
-    tags: {
-        type: [{
-            type: String
-        }],
-    },
+    tags: [{
+        type: String
+    }],
     image: {
         type: String
     },
