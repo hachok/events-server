@@ -20,7 +20,7 @@ router.post('/login', [
     }, (err, user) => {
         if (err) throw err;
         if (!user) {
-            res.status(401).json({ status: 401, message: 'Authentication failed. Bad credentials.' });
+            res.status(401).json({errors: [{ status: 401, msg: 'Authentication failed. Bad credentials.' }]});
         } else if (user) {
             bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
                 if (err) throw err;
@@ -30,7 +30,7 @@ router.post('/login', [
                     });
                     res.status(200).send({ token: token });
                 } else {
-                    res.status(401).json({ status: 401, message: 'Authentication failed. Bad credentials.' });
+                    res.status(401).json({errors: [{ status: 401, msg: 'Authentication failed. Bad credentials.' }]});
                 }
             });
         }
