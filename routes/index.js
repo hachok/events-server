@@ -14,17 +14,14 @@ router.use((req, res, next) => {
     if (token) {
         jwt.verify(token, config.secret, (err, decoded) => {
             if (err) {
-                return res.json({message: 'Failed to authenticate token.'});
+                return res.json({errors: [{msg: 'Failed to authenticate token.' }]});
             } else {
                 req.decoded = decoded;
                 next();
             }
         });
     } else {
-        return res.status(403).send({
-            status: 403,
-            message: 'Forbidden Error'
-        });
+        return res.status(403).json({errors: [{ status: 403, msg: 'Forbidden Error' }]})
     }
 });
 
